@@ -76,12 +76,18 @@ class CustomerService {
     println()
     println("---------------------删除客户---------------------")
     println("请输入待删除客户id：")
-    val id = StdIn.readInt()
-    val flag: Boolean = customerDao.delete(id)
+    val id = StdIn.readLine()
+    var id_1 = 0 
+    if(id.matches("\\d+")) id_1 = id.toInt else {
+      println("--------------------请输入数字--------------------")
+      deleteCustomer
+      return
+    }
+    val flag: Boolean = customerDao.delete(id_1)
     if (flag == true) {
-      println("删除id=" + id + "对应的customer信息成功")
+      println("删除id=" + id_1 + "对应的customer信息成功")
     } else {
-      println("删除失败！id=" + id + "对应的customer信息不存在")
+      println("删除失败！id=" + id_1 + "对应的customer信息不存在")
     }
     println("----------继续删除请输入：1！退出系统请输入：0！------------------")
     val tab = StdIn.readLine()
@@ -93,8 +99,14 @@ class CustomerService {
     println()
     println("---------------------修改客户---------------------")
     println("请选择待修改客户id：")
-    val id = StdIn.readInt()
-    var customer: Customer = findById(id)
+    val id = StdIn.readLine()
+    var id_1 = 0 
+    if(id.matches("\\d+")) id_1 = id.toInt else {
+      println("--------------------请输入数字--------------------")
+      updateById
+      return
+    }
+    val customer: Customer = findById(id_1)
 
     if (customer != null) {
       println("------------------输入修改信息------------------")
@@ -141,12 +153,12 @@ class CustomerService {
       if (email.length() == 0) email = customer.email
 
 //      println(id, name, gender, age, tel, email)
-      val newCustomer: Customer = new Customer(id, name, gender_1, age_1, tel, email)
-      val flag = customerDao.updateById(customerDao.getIndexById, newCustomer, id)
+      val newCustomer: Customer = new Customer(id_1, name, gender_1, age_1, tel, email)
+      val flag = customerDao.updateById(customerDao.getIndexById, newCustomer, id_1)
       if (flag == true) {
-        println("修改id=" + id + "对应的customer信息成功")
+        println("修改id=" + id_1 + "对应的customer信息成功")
       } else {
-        println("修改失败！id=" + id + "对应的customer信息不存在")
+        println("修改失败！id=" + id_1 + "对应的customer信息不存在")
       }
     }
 
